@@ -49,7 +49,7 @@
 					
 					<!-- if user log  -->
 					<c:if test="${sessionScope.username != null}">
-						<li><a href="/websale/logout">logout</a></li>
+						<li><a href="/websport/logout">logout</a></li>
 						
 					</c:if>
 					

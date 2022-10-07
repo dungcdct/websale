@@ -23,14 +23,29 @@ public class serverLogin extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
-		Boolean resultCheckAcc = DAO.checkLog(username, password);
-		if (resultCheckAcc) {
+		String fullname = DAO.checkLog(username, password);
+		if (fullname != null) {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("username", username);
+			session.setAttribute("fullname", fullname);
 			response.sendRedirect("home.jsp");
 			System.out.println("log succes , account with user name is :" + username);
-//				not complete set attribute last name and category
+			System.out.println("log succes , account with full name is :" + fullname);
 
+		}
+		else {
+			String test = request.getRequestURI();
+			System.out.println(test);
+			
+//			if view page is user 
+			if(test.equals("/websport/loguser")) {
+				response.sendRedirect("login.jsp");
+			}
+			else {
+				
+//			if view page is seller
+				response.sendRedirect("loginSeller.jsp");
+			}
 		}
 	}
 

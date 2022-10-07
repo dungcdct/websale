@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 
 import entity.user;
@@ -83,28 +86,32 @@ public class DAO {
 		}
 		return result;
 	}
+// if infor account user input is speciry , fullname will return , otherwise null.
+	public static String checkLog(String username, String password) {
 
-	public static boolean checkLog(String username, String password) {
-
-		boolean result = false;
+		String fullname = null;
 		Statement stmt = connectSqlServer();
 		if (stmt != null) {
-			String checkaccount = "select * from account where username = '" + username + "'";
+			String checkaccount = "select a.username, a.password , u.fullname\r\n"
+					+ "from account a\r\n"
+					+ "inner join users u on a.username =  u.username\r\n"
+					+ "where a.username = '"+ username +"'\r\n"
+					;
 			String fetchPass = "";
 			try {
 				ResultSet fetchAccount = stmt.executeQuery(checkaccount);
 				while (fetchAccount.next()) {
 					fetchPass = fetchAccount.getString("password").trim();
-				}
-				if (fetchPass != null && !fetchPass.equals("")) {
-					if (fetchPass.equals(password)) {
-						result = true;
+					
+					if(BCrypt.checkpw(password, fetchPass)) {
+						fullname = fetchAccount.getString("fullname");
 					}
 				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return result;
+		return fullname;
 	}
 }

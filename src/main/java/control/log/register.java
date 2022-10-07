@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import entity.user;
 import exception.log.addressException;
 import exception.log.emailException;
@@ -58,12 +60,15 @@ public class register extends HttpServlet {
 				String[] arrayFullname = fullname.split(" ");
 				String lastname = arrayFullname[arrayFullname.length-1];
 				
+//				hash password 
+				String passwordhashed = BCrypt.hashpw(password, BCrypt.gensalt(15));
+				
 				
 //				create object user when information checked 
 				user user = new user(username, fullname, address, phone, category, email);
 				
 //				will this is insert account of user , should be ID card is null.
-				Boolean result = DAO.register(user, password, IDcard);
+				Boolean result = DAO.register(user, passwordhashed, IDcard);
 				if(result) {
 					
 //					authentication account if loged
@@ -81,7 +86,7 @@ public class register extends HttpServlet {
 					System.out.println(test);
 					
 //					if view page is user 
-					if(test.equals("/websale/register")) {
+					if(test.equals("/websport/register")) {
 						req.getRequestDispatcher("login.jsp").forward(req, resp);
 					}
 					else {

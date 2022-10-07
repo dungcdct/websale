@@ -42,7 +42,7 @@
 						href="#" class="social"><i class="fab fa-google-plus-g"></i></a> <a
 						href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 				</div>
-				<span>or use your account</span> <input type="email"
+				<span>or use your account</span> <input type="text"
 					placeholder="user name" name="username"/> <input type="password"
 					placeholder="Password" name="password"/> <a href="#">Forgot your password?</a>
 				<button style="cursor: pointer;">Sign In</button>
