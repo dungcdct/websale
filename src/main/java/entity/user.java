@@ -12,17 +12,20 @@ public class user {
 	private String category = "";
 	private String email = "";
 	private String timeCreate;
+	private String nameAvatar = "";
 
 	public user() {
 	}
 
-	public user(String username, String fullname, String address, String phone, String category, String email) {
+	public user(String username, String fullname, String address, String phone, String category, String email
+			,String nameAvatar) {
 		this.username = username;
 		this.fullname = fullname;
 		this.address = address;
 		this.phone = phone;
 		this.category = category;
 		this.email = email;
+		this.nameAvatar = nameAvatar;
 		
 //		format date time yyyy-mm-dd hh:mm:ss to stored in DB
 		LocalDateTime now = LocalDateTime.now();
@@ -43,6 +46,14 @@ public class user {
         System.out.println("After : " + formatDateTime);
 	}
 	
+	public String getNameAvatar() {
+		return nameAvatar;
+	}
+
+	public void setNameAvatar(String nameAvatar) {
+		this.nameAvatar = nameAvatar;
+	}
+
 	public String getUsername() {
 		return username;
 	}

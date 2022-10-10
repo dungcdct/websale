@@ -65,7 +65,7 @@ public class register extends HttpServlet {
 				
 				
 //				create object user when information checked 
-				user user = new user(username, fullname, address, phone, category, email);
+				user user = new user(username, fullname, address, phone, category, email, "avatardefault.jpg");
 				
 //				will this is insert account of user , should be ID card is null.
 				Boolean result = DAO.register(user, passwordhashed, IDcard);
