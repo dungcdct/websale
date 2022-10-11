@@ -46,13 +46,13 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#">Track Order</a></li>
-					
+
 					<!-- if user log  -->
 					<c:if test="${sessionScope.username != null}">
 						<li><a href="/websport/logout">logout</a></li>
 						<li><a href="/websport/profileUser">profile</a></li>
 					</c:if>
-					
+
 					<!-- if user logouted -->
 					<c:if test="${sessionScope.username == null}">
 						<li><a href="login.jsp">Login</a></li>
@@ -71,6 +71,23 @@
 										234, New york Street,<br> Just Location, USA
 									</div> </a></li>
 						</ul></li>
+					
+					<li
+						style="background-image: url('./upload/avatar/${sessionScope.nameavatar}'); 
+						background-size: cover;
+						    background-position: center;
+						    background-repeat: no-repeat;
+						    border-radius: 26px;
+						    padding: 10px 10px;">
+						<a href="profile.jsp"> </a>
+
+					</li>
+					<c:if test="${sessionScope.username != null}">
+				         <li style="margin-left:10px">
+						<p style="color: #fff;">xin chào</p>
+						<p style="color: red; font-size: 15px; margin-top:-5px;">${sessionScope.lastname}</p>
+						</li>
+					</c:if>
 				</ul>
 				<form class="navbar-form navbar-right" role="search">
 					<div class="form-group">

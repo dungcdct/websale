@@ -37,15 +37,24 @@ public class profileUser extends HttpServlet {
 		String username = (String) session.getAttribute("username");
 		if (username != null) {
 			user user = DAO.fetchAllInforUser(username);
-			
+			if(user != null) {
+				
 			String nameAvatar =  user.getNameAvatar();
-			System.out.println("path :" + nameAvatar);
-			req.setAttribute("loadInforUser", user);
-			req.setAttribute("nameavatar", nameAvatar);
+			System.out.println("name image  :" + nameAvatar);
+			session.setAttribute("loadInforUser", user);
+			
+//			set attribute for name avatar in scope session
+			session.setAttribute("nameavatar", nameAvatar);
+			
 			System.out.println("check user succes. continue will req infor user to page profile");
 			
 //			check log success , request information user to profile
 			req.getRequestDispatcher("profile.jsp").forward(req, resp);
+			}
+			else {
+				System.out.println("fetch infor wrong, redirect to home");
+				resp.sendRedirect("home.jsp");
+			}
 		}
 		else{
 			System.out.println("user not log, load infor wrong , redirect to home");

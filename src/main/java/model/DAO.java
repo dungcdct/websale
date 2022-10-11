@@ -12,6 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 
+import control.profile.updateAvatar;
 import entity.seller;
 import entity.user;
 
@@ -122,9 +123,9 @@ public class DAO {
 		Statement stmt = connectSqlServer();
 		if (stmt != null) {
 			
-				fetchInforUser = "select u.fullname, u.Addres , u.phone, u.email, a.name_image\r\n"
-						+ "from users u\r\n"
-						+ "inner join avatar a on u.username = a.username\r\n"
+				fetchInforUser = "select u.fullname, u.Addres , u.phone, u.email, a.name_image "
+						+ "from users u "
+						+ "inner join avatar a on u.username = a.username "
 						+ "where u.username = '"+ username +"'";
 			
 			try {
@@ -175,5 +176,26 @@ public class DAO {
 			}
 		}
 		return null;
+	}
+	
+	public static boolean updateAvatar(String username, String nameimage) {
+		
+		boolean check = false;
+		Statement stmt = connectSqlServer();
+		String updateAvatar ="UPDATE avatar\r\n"
+				+ "SET  name_image= '"+ nameimage +"'\r\n"
+				+ "WHERE username='"+ username +"';";
+		if (stmt != null) {
+			try {
+				int result = stmt.executeUpdate(updateAvatar);
+				if(result > 0) {
+					check = true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return check;
 	}
 }

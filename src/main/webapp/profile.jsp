@@ -19,12 +19,12 @@
     <header>
   
       <!-- here’s the avatar -->
-      <a href="loadAvatar">
-        <img src="./upload/${requestScope.nameavatar}" style="size: 200px;">
+      <a href="updateAvatar.jsp" title="change avatar">
+        <img src="./upload/avatar/${sessionScope.nameavatar}" style="size: 200px;">
       </a>
   
-      <!-- the username , get method full from user requested from server profileuser.java-->
-      <h1>${requestScope.loadInforUser.getFullname()}</h1>
+      <!-- the fullname , get method full from user requested from server profileuser.java-->
+      <h1>${sessionScope.loadInforUser.getFullname()}</h1>
   
       <!-- and role or location -->
       <h2>developer</h2>
@@ -35,15 +35,15 @@
     <div class="profile-bio">
   		<!-- email -->
   		<p style="color:red; border-top: 0.5px solid #a5a5a5;">Email:</p>
-  		<h2>${ requestScope.loadInforUser.getEmail()}</h2>
+  		<h2>${sessionScope.loadInforUser.getEmail()}</h2>
   		
   		<!-- address -->
   		<p style="color:red; border-top: 0.5px solid #a5a5a5;">Address :</p>
-      	<p>${requestScope.loadInforUser.getAddress() }</p>
+      	<p>${sessionScope.loadInforUser.getAddress() }</p>
       	
       	<!-- phone -->
       	<p style="color:red; border-top: 0.5px solid #a5a5a5;">Phone :</p>
-      	<p>${requestScope.loadInforUser.getPhone() }</p>
+      	<p>${sessionScope.loadInforUser.getPhone() }</p>
   
     </div>
   

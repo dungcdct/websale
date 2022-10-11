@@ -76,7 +76,8 @@ public class register extends HttpServlet {
 					session.setAttribute("username", username);
 					session.setAttribute("lastname", lastname);
 					session.setAttribute("category", category);
-					
+					session.setAttribute("nameavatar", "avatardefault.jpg");
+					session.setAttribute("loadInforUser", user);
 //					request to home 
 //					req.getRequestDispatcher("home.jsp").forward(req, resp);
 					resp.sendRedirect("home.jsp");

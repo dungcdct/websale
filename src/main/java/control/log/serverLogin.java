@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entity.user;
 import model.DAO;
 
 /**
@@ -24,10 +25,25 @@ public class serverLogin extends HttpServlet {
 		String password = request.getParameter("password");
 
 		String fullname = DAO.checkLog(username, password);
+		
 		if (fullname != null) {
+//			take last name
+			String[] plansFullname = fullname.split(" ");
+			String lastname = plansFullname[plansFullname.length-1];
+//			uppercase first letter
+			String LastNameStandard = lastname.substring(0, 1).toUpperCase() + lastname.substring(1);
+			
 			HttpSession session = request.getSession(true);
 			session.setAttribute("username", username);
-			session.setAttribute("fullname", fullname);
+			session.setAttribute("lastname", LastNameStandard);
+			
+			user user = DAO.fetchAllInforUser(username);
+			if(user != null) {
+				HttpSession sesion = request.getSession();
+				sesion.setAttribute("nameavatar", user.getNameAvatar());
+				sesion.setAttribute("loadInforUser", user);
+				
+			}
 			response.sendRedirect("home.jsp");
 			System.out.println("log succes , account with user name is :" + username);
 			System.out.println("log succes , account with full name is :" + fullname);
