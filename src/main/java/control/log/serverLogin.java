@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entity.seller;
 import entity.user;
 import model.DAO;
 
@@ -23,7 +24,12 @@ public class serverLogin extends HttpServlet {
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		
 
+		System.out.println("log input user:");
+		System.out.println(username);
+		System.out.println(password);
+//		check account 
 		String fullname = DAO.checkLog(username, password);
 		
 		if (fullname != null) {
@@ -36,22 +42,52 @@ public class serverLogin extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("username", username);
 			session.setAttribute("lastname", LastNameStandard);
+
+//			check page logging 
+			String pathOfRequest = request.getRequestURI();
+			System.out.println("request from page had path is : " + pathOfRequest);
 			
-			user user = DAO.fetchAllInforUser(username);
-			if(user != null) {
-				HttpSession sesion = request.getSession();
-				sesion.setAttribute("nameavatar", user.getNameAvatar());
-				sesion.setAttribute("loadInforUser", user);
+			
+//			if view page is user 
+			if(pathOfRequest.equals("/websport/loguser")) {
+				user user = DAO.fetchAllInforUser(username);
+				if(user != null && user.getCategory().equals("user")) {
+					HttpSession sesion = request.getSession();
+					sesion.setAttribute("nameavatar", user.getNameAvatar());
+					sesion.setAttribute("loadInforUser", user);
+					
+					System.out.println("log succes , account with user name is :" + username);
+					System.out.println("log succes , account with full name is :" + fullname);
+					response.sendRedirect("home.jsp");
+				}
+				else {
+					response.sendRedirect("login.jsp");
+				}
+			}
+			else {
+				
+//			if view page is seller
+				
+				seller seller = DAO.fetchAllInforSeller(username);
+				if(seller != null && seller.getCategory().equals("seller")) {
+					HttpSession sesion = request.getSession(true);
+					sesion.setAttribute("nameavatar", seller.getNameAvatar());
+					sesion.setAttribute("loadInforUser", seller);
+					System.out.println("log succes , account with user name is :" + username);
+					System.out.println("log succes , account with full name is :" + fullname);
+					response.sendRedirect("homeSeller.jsp");
+				}
+				else {
+					System.out.println("log wrong!");
+					response.sendRedirect("loginSeller.jsp");
+				}
 				
 			}
-			response.sendRedirect("home.jsp");
-			System.out.println("log succes , account with user name is :" + username);
-			System.out.println("log succes , account with full name is :" + fullname);
-
+			
 		}
 		else {
 			String test = request.getRequestURI();
-			System.out.println(test);
+			System.out.println("check account wrong : "  + test);
 			
 //			if view page is user 
 			if(test.equals("/websport/loguser")) {

@@ -69,6 +69,8 @@ public class register extends HttpServlet {
 				
 //				will this is insert account of user , should be ID card is null.
 				Boolean result = DAO.register(user, passwordhashed, IDcard);
+				String test = req.getRequestURI();
+				System.out.println("register : " + test);
 				if(result) {
 					
 //					authentication account if loged
@@ -80,11 +82,18 @@ public class register extends HttpServlet {
 					session.setAttribute("loadInforUser", user);
 //					request to home 
 //					req.getRequestDispatcher("home.jsp").forward(req, resp);
-					resp.sendRedirect("home.jsp");
+//					if view page is user 
+					if(test.equals("/websport/register")) {
+						resp.sendRedirect("home.jsp");
+					}
+					else {
+						
+//					if view page is seller
+						resp.sendRedirect("homeSeller.jsp");
+					}
 				}
 				else {
-					String test = req.getRequestURI();
-					System.out.println(test);
+					
 					
 //					if view page is user 
 					if(test.equals("/websport/register")) {

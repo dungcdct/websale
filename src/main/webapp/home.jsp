@@ -49,16 +49,23 @@
 
 					<!-- if user log  -->
 					<c:if test="${sessionScope.username != null}">
-						<li><a href="/websport/logout">logout</a></li>
-						<li><a href="/websport/profileUser">profile</a></li>
+						<c:if test="${!sessionScope.loadInforUser.getCategory().equals('seller')}">
+							<li><a href="/websport/logout">logout</a></li>
+							<li><a href="/websport/profileUser">profile</a></li>
+						</c:if>
 					</c:if>
 
+  					<c:if test="${sessionScope.loadInforUser.getCategory().equals('seller')}">
+  						<li><a href="homeSeller.jsp">move to home seller</a></li>
+  					</c:if>
 					<!-- if user logouted -->
 					<c:if test="${sessionScope.username == null}">
 						<li><a href="login.jsp">Login</a></li>
-						<li><a href="loginSeller.jsp">login seller</a></li>
+						<c:if test="${!sessionScope.loadInforUser.getCategory().equals('seller')}">
+						   <li><a href="loginSeller.jsp">login seller</a></li>
+						</c:if>
 					</c:if>
-
+					
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">24x7 Support <b class="caret"></b></a>
@@ -71,22 +78,25 @@
 										234, New york Street,<br> Just Location, USA
 									</div> </a></li>
 						</ul></li>
-					
-					<li
-						style="background-image: url('./upload/avatar/${sessionScope.nameavatar}'); 
-						background-size: cover;
-						    background-position: center;
-						    background-repeat: no-repeat;
-						    border-radius: 26px;
-						    padding: 10px 10px;">
-						<a href="profile.jsp"> </a>
-
-					</li>
 					<c:if test="${sessionScope.username != null}">
-				         <li style="margin-left:10px">
-						<p style="color: #fff;">xin chào</p>
-						<p style="color: red; font-size: 15px; margin-top:-5px;">${sessionScope.lastname}</p>
-						</li>
+						<c:if test="${sessionScope.loadInforUser.getCategory().equals('user')}">
+					
+							<li
+								style="background-image: url('./upload/avatar/${sessionScope.nameavatar}'); 
+								background-size: cover;
+								    background-position: center;
+								    background-repeat: no-repeat;
+								    border-radius: 26px;
+								    padding: 10px 10px;">
+								<a href="profile.jsp"> </a>
+		
+							</li>
+					
+					         <li style="margin-left:10px">
+							<p style="color: #fff;">xin chào</p>
+							<p style="color: red; font-size: 15px; margin-top:-5px;">${sessionScope.lastname}</p>
+							</li>
+						</c:if>
 					</c:if>
 				</ul>
 				<form class="navbar-form navbar-right" role="search">
@@ -117,25 +127,26 @@
 					<div id="mi-slider" class="mi-slider">
 						<ul class="mi-current">
 
+						
 							<li><a href="#"> <img
-									src="./assets-all-page/assets-home/ItemSlider/images/1.jpg"
+									src="./assets-all-page/assets-home/ItemSlider/images/1.webp"
 									alt="img01">
-									<h4>Boots</h4>
+									<h4>ADIDAS</h4>
 							</a></li>
 							<li><a href="#"> <img
-									src="./assets-all-page/assets-home/ItemSlider/images/2.jpg"
+									src="./assets-all-page/assets-home/ItemSlider/images/2.webp"
 									alt="img02">
-									<h4>Oxfords</h4>
+									<h4>NIKE</h4>
 							</a></li>
 							<li><a href="#"> <img
-									src="./assets-all-page/assets-home/ItemSlider/images/3.jpg"
+									src="./assets-all-page/assets-home/ItemSlider/images/3.png"
 									alt="img03">
-									<h4>Loafers</h4>
+									<h4>BALANCE</h4>
 							</a></li>
 							<li><a href="#"> <img
-									src="./assets-all-page/assets-home/ItemSlider/images/4.jpg"
+									src="./assets-all-page/assets-home/ItemSlider/images/4.png"
 									alt="img04">
-									<h4>Sneakers</h4>
+									<h4>SNEAKERS</h4>
 							</a></li>
 						</ul>
 						<ul>
@@ -246,48 +257,46 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div>
-					<a href="#" class="list-group-item active">Electronics </a>
+					<a href="#" class="list-group-item active">categories</a>
 					<ul class="list-group">
 
-						<li class="list-group-item">Mobile <span
+						<li class="list-group-item">Most recent<span
 							class="label label-primary pull-right">234</span>
 						</li>
-						<li class="list-group-item">Computers <span
+						<li class="list-group-item">lots of discounts<span
 							class="label label-success pull-right">34</span>
 						</li>
-						<li class="list-group-item">Tablets <span
+						<li class="list-group-item">best selling shoes<span
 							class="label label-danger pull-right">4</span>
 						</li>
-						<li class="list-group-item">Appliances <span
+						<li class="list-group-item">the most votes<span
 							class="label label-info pull-right">434</span>
 						</li>
-						<li class="list-group-item">Games &amp; Entertainment <span
+						<li class="list-group-item">comment &amp; vote recently <span
 							class="label label-success pull-right">34</span>
 						</li>
 					</ul>
 				</div>
-				<!-- /.div -->
+				
+				<!-- detail order-->
 				<div>
-					<a href="#" class="list-group-item active list-group-item-success">Clothing
-						&amp; Wears </a>
+					<a href="#" class="list-group-item active list-group-item-success">orders</a>
 					<ul class="list-group">
 
-						<li class="list-group-item">Men's Clothing <span
+						<li class="list-group-item">all orders<span
 							class="label label-danger pull-right">300</span>
 						</li>
-						<li class="list-group-item">Women's Clothing <span
-							class="label label-success pull-right">340</span>
+						<li class="list-group-item">see schedule
 						</li>
-						<li class="list-group-item">Kid's Wear <span
-							class="label label-info pull-right">735</span>
+						<li class="list-group-item">history	
 						</li>
 
 					</ul>
 				</div>
+				
 				<!-- /.div -->
 				<div>
-					<a href="#" class="list-group-item active">Accessaries &amp;
-						Extras </a>
+					<a href="#" class="list-group-item active"></a>
 					<ul class="list-group">
 						<li class="list-group-item">Mobile Accessaries <span
 							class="label label-warning pull-right">456</span>

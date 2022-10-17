@@ -8,11 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 
 import control.profile.updateAvatar;
+import control.seller.addproduct;
+import entity.product;
 import entity.seller;
 import entity.user;
 
@@ -197,5 +201,68 @@ public class DAO {
 		}
 		
 		return check;
+	}
+	
+	
+//	fetch id of user by username
+	public static int takeIdByUsername(String username) {
+		
+		int IDseller = 0;
+		Statement stmt = connectSqlServer();
+		String fetchID ="select ID_Seller "
+				+ "from seller "
+				+ "where username = '"+ username +"'";
+		if (stmt != null) {
+			try {
+				ResultSet result = stmt.executeQuery(fetchID);
+				if(result.next()) {
+					IDseller = result.getInt("ID_Seller");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return IDseller;
+	}
+//	insert product to DB
+	public static boolean addproduct(product product) {
+
+		Statement stmt = connectSqlServer();
+		String insertProduct ="insert into product values"
+				+ "(N'"+ product.getNameproduct() +"'," 
+				+ product.getPrice() 
+				+",N'"+ product.getDescribe() 
+				+"','"+ product.getNameimgOrVideo() +"',"+ product.getId_seller() +") ";
+		if (stmt != null) {
+			try {
+				int result = stmt.executeUpdate(insertProduct);
+				if(result > 0) {
+					return true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	
+	public static int fetchIDmaxOfProduct() {
+		int idmax = 0;
+		Statement stmt = connectSqlServer();
+		String fetchIDmax ="select  max(ID_product) maxID\r\n"
+				+ "from product";
+		if (stmt != null) {
+			try {
+				ResultSet result = stmt.executeQuery(fetchIDmax);
+				if(result.next()) {
+					idmax = result.getInt("maxID");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return idmax;
 	}
 }
