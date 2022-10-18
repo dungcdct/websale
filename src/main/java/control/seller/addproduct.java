@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.sound.midi.Soundbank;
 
@@ -28,6 +29,8 @@ public class addproduct extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		HttpSession session = req.getSession(false);
+		
 		String username = (String) req.getSession().getAttribute("username");
 
 		String realpathserver = req.getServletContext().getRealPath("/upload");
@@ -63,11 +66,11 @@ public class addproduct extends HttpServlet {
 			System.out.println(filename +" and " + fileNameHandled);
 
 //    		fetch id seller by user name
-			int IDseller = DAO.takeIdByUsername(username);
+			int IDseller = (Integer)session.getAttribute("idseller");
 			if (IDseller > 0) {
 
 //    		create object stored infor of product
-				product product = new product(name, price, decribe, IDseller, filename);
+				product product = new product(idProductCurrent,name, price, decribe, IDseller, fileNameHandled);
 
 //    		insert product to Db
 				boolean result = DAO.addproduct(product);

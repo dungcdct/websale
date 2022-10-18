@@ -3,6 +3,8 @@ package control.profile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.servlet.ServletContext;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entity.product;
 import entity.user;
 import model.DAO;
 
@@ -25,14 +28,12 @@ public class profileUser extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 
-		ServletContext context = req.getServletContext();
-		String realpath = context.getRealPath("/upload");	
+		List<product> a = DAO.loadProductInMain();
+		Iterator<product> b = a.iterator();
+		while (b.hasNext()) {
+			System.out.println(b.next().getNameproduct());
+		}
 		
-		File file = new File(realpath);
-		System.out.println(file.canRead());
-		System.out.println(realpath);
-		
-		System.out.println("real path :" + realpath);
 		HttpSession session = req.getSession();
 		String username = (String) session.getAttribute("username");
 		if (username != null) {

@@ -2,6 +2,8 @@ package entity;
 
 public class product {
 
+	
+	private int idproduct;
 	private String nameproduct = "";
 	private int price;
 	private String describe = "";
@@ -12,7 +14,8 @@ public class product {
 
 	}
 
-	public product(String nameproduct, int price, String describe, int id_seller, String nameimgOrVideo) {
+	public product(int idproduct,String nameproduct, int price, String describe, int id_seller, String nameimgOrVideo) {
+		this.idproduct = idproduct;
 		this.nameproduct = nameproduct;
 		this.price = price;
 		this.describe = describe;
@@ -59,6 +62,16 @@ public class product {
 
 	public void setNameimgOrVideo(String nameimgOrVideo) {
 		this.nameimgOrVideo = nameimgOrVideo;
+	}
+
+	
+	
+	public int getIdproduct() {
+		return idproduct;
+	}
+
+	public void setIdproduct(int idproduct) {
+		this.idproduct = idproduct;
 	}
 
 	@Override

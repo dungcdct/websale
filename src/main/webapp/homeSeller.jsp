@@ -15,7 +15,7 @@
 </style>
 <body>
 	<a style="font-size: 30px;color: #345; margin:20px; display:inline-block; text-decoration: none;" href="addproduct.jsp">Add product</a><br>
-	<a style="font-size: 30px;color: #233;  margin:20px; display:inline-block;text-decoration: none;" href="">Show all product</a><br>
+	<a style="font-size: 30px;color: #233;  margin:20px; display:inline-block;text-decoration: none;" href="/websport/loadproducts">Show all product</a><br>
 	<a style="font-size: 30px;color: #391; margin:20px; display:inline-block;text-decoration: none;" href="">Check product most popular</a><br>
 	<a style="font-size: 30px;color: #586; margin:20px; display:inline-block;text-decoration: none;" href="">Application pending approval</a><br>
 	<a style="font-size: 30px;color: #196; margin:20px; display:inline-block;text-decoration: none;" href="">Orders being transported</a><br>

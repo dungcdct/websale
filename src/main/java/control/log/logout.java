@@ -24,6 +24,10 @@ public class logout extends HttpServlet {
 		String username = (String) req.getSession().getAttribute("username");
 		if(username != null) {
 			HttpSession session = req.getSession();
+			session.removeAttribute("username");
+			session.removeAttribute("loadInforUser");
+			session.removeAttribute("nameavatar");
+			session.removeAttribute("category");
 			session.invalidate();
 			resp.sendRedirect("home.jsp");
 		}

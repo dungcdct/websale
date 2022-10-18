@@ -1,6 +1,33 @@
+<%@page import="entity.user"%>
+<%@page import="model.DAO"%>
+<%@page import="entity.product"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%! List<product> listproduct = new ArrayList<product>(); 
+boolean result = false;
+String category = "";
+boolean checkcategory = false;
+%>
+<%
+	listproduct = DAO.loadProductInMain();
+	if(listproduct != null){
+		result = true;
+	}
+	
+	if(session != null){
+		
+		
+		category =(String) session.getAttribute("category");
+		if(category != null && category.equals("seller")){
+			checkcategory = true;
+		}
+	}
+	
+%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -49,22 +76,23 @@
 
 					<!-- if user log  -->
 					<c:if test="${sessionScope.username != null}">
-						<c:if test="${!sessionScope.loadInforUser.getCategory().equals('seller')}">
+						<c:if test="${sessionScope.loadInforUser.getCategory().equals('user')}">
 							<li><a href="/websport/logout">logout</a></li>
 							<li><a href="/websport/profileUser">profile</a></li>
 						</c:if>
+						
+	  					<c:if test="<%=checkcategory %>">
+	  						<li><a href="homeSeller.jsp">move to home seller</a></li>
+	  					</c:if>
 					</c:if>
 
-  					<c:if test="${sessionScope.loadInforUser.getCategory().equals('seller')}">
-  						<li><a href="homeSeller.jsp">move to home seller</a></li>
-  					</c:if>
 					<!-- if user logouted -->
 					<c:if test="${sessionScope.username == null}">
 						<li><a href="login.jsp">Login</a></li>
-						<c:if test="${!sessionScope.loadInforUser.getCategory().equals('seller')}">
-						   <li><a href="loginSeller.jsp">login seller</a></li>
-						</c:if>
+						 <li><a href="loginSeller.jsp">login seller</a></li>
 					</c:if>
+					
+					
 					
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -253,102 +281,8 @@
 			</div>
 			<!-- /.col -->
 		</div>
-		<!-- /.row -->
-		<div class="row">
-			<div class="col-md-3">
-				<div>
-					<a href="#" class="list-group-item active">categories</a>
-					<ul class="list-group">
-
-						<li class="list-group-item">Most recent<span
-							class="label label-primary pull-right">234</span>
-						</li>
-						<li class="list-group-item">lots of discounts<span
-							class="label label-success pull-right">34</span>
-						</li>
-						<li class="list-group-item">best selling shoes<span
-							class="label label-danger pull-right">4</span>
-						</li>
-						<li class="list-group-item">the most votes<span
-							class="label label-info pull-right">434</span>
-						</li>
-						<li class="list-group-item">comment &amp; vote recently <span
-							class="label label-success pull-right">34</span>
-						</li>
-					</ul>
-				</div>
-				
-				<!-- detail order-->
-				<div>
-					<a href="#" class="list-group-item active list-group-item-success">orders</a>
-					<ul class="list-group">
-
-						<li class="list-group-item">all orders<span
-							class="label label-danger pull-right">300</span>
-						</li>
-						<li class="list-group-item">see schedule
-						</li>
-						<li class="list-group-item">history	
-						</li>
-
-					</ul>
-				</div>
-				
-				<!-- /.div -->
-				<div>
-					<a href="#" class="list-group-item active"></a>
-					<ul class="list-group">
-						<li class="list-group-item">Mobile Accessaries <span
-							class="label label-warning pull-right">456</span>
-						</li>
-						<li class="list-group-item">Men's Accessaries <span
-							class="label label-success pull-right">156</span>
-						</li>
-						<li class="list-group-item">Women's Accessaries <span
-							class="label label-info pull-right">400</span>
-						</li>
-						<li class="list-group-item">Kid's Accessaries <span
-							class="label label-primary pull-right">89</span>
-						</li>
-						<li class="list-group-item">Home Products <span
-							class="label label-danger pull-right">90</span>
-						</li>
-						<li class="list-group-item">Kitchen Products <span
-							class="label label-warning pull-right">567</span>
-						</li>
-					</ul>
-				</div>
-				<!-- /.div -->
-				<div>
-					<ul class="list-group">
-						<li class="list-group-item list-group-item-success"><a
-							href="#">New Offer's Coming </a></li>
-						<li class="list-group-item list-group-item-info"><a href="#">New
-								Products Added</a></li>
-						<li class="list-group-item list-group-item-warning"><a
-							href="#">Ending Soon Offers</a></li>
-						<li class="list-group-item list-group-item-danger"><a
-							href="#">Just Ended Offers</a></li>
-					</ul>
-				</div>
-				<!-- /.div -->
-				<div class="well well-lg offer-box offer-colors">
-
-
-					<span class="glyphicon glyphicon-star-empty"></span>25 % off , GRAB
-					IT <br> <br>
-					<div class="progress progress-striped">
-						<div class="progress-bar progress-bar-danger" role="progressbar"
-							aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
-							style="width: 70%">
-							<span class="sr-only">70% Complete (success)</span> 2hr 35 mins
-							left
-						</div>
-					</div>
-					<a href="#">click here to know more </a>
-				</div>
-				<!-- /.div -->
-			</div>
+		
+			<div>
 			<!-- /.col -->
 			<div class="col-md-9">
 				<div>
@@ -357,6 +291,8 @@
 						<li class="active">Electronics</li>
 					</ol>
 				</div>
+				
+				
 				<!-- /.div -->
 				<div class="row">
 					<div class="btn-group alg-right-pad">
@@ -380,77 +316,41 @@
 						</div>
 					</div>
 				</div>
-				<!-- /.row -->
-				<div class="row">
-					<div class="col-md-4 text-center col-sm-6 col-xs-6">
-						<div class="thumbnail product-box">
-							<img src="./assets-all-page/assets-home/img/dummyimg.png" alt="">
-							<div class="caption">
-								<h3>
-									<a href="#">Samsung Galaxy </a>
-								</h3>
-								<p>
-									Price : <strong>$ 3,45,900</strong>
-								</p>
-								<p>
-									<a href="#">Ptional dismiss button </a>
-								</p>
-								<p>Ptional dismiss button in tional dismiss button in</p>
-								<p>
-									<a href="#" class="btn btn-success" role="button">Add To
-										Cart</a> <a href="#" class="btn btn-primary" role="button">See
-										Details</a>
-								</p>
+				
+				
+				
+				<!-- product -->
+				
+				<!-- check fetch data in db is succes -->
+				<c:if test="<%=result%>">
+						<c:forEach var="product" items="<%=listproduct%>">
+							<div class="row">
+							<div class="col-md-4 text-center col-sm-6 col-xs-6">
+								<div class="thumbnail product-box">
+									<img src="./upload/product/${product.getNameimgOrVideo()}" alt="">
+									<div class="caption">
+										<h3>
+											<a href="#">${product.getNameproduct()}</a>
+										</h3>
+										<p>
+											Price : <strong>$ 3,45,900</strong>
+										</p>
+										<p>
+											<a href="#">Ptional dismiss button </a>
+										</p>
+										<p>Ptional dismiss button in tional dismiss button in</p>
+										<p>
+											<a href="#" class="btn btn-success" role="button">Add To
+												Cart</a> <a href="#" class="btn btn-primary" role="button">See
+												Details</a>
+										</p>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-					<!-- /.col -->
-					<div class="col-md-4 text-center col-sm-6 col-xs-6">
-						<div class="thumbnail product-box">
-							<img src="./assets-all-page/assets-home/img/dummyimg.png" alt="">
-							<div class="caption">
-								<h3>
-									<a href="#">Samsung Galaxy </a>
-								</h3>
-								<p>
-									Price : <strong>$ 3,45,900</strong>
-								</p>
-								<p>
-									<a href="#">Ptional dismiss button </a>
-								</p>
-								<p>Ptional dismiss button in tional dismiss button in</p>
-								<p>
-									<a href="#" class="btn btn-success" role="button">Add To
-										Cart</a> <a href="#" class="btn btn-primary" role="button">See
-										Details</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<!-- /.col -->
-					<div class="col-md-4 text-center col-sm-6 col-xs-6">
-						<div class="thumbnail product-box">
-							<img src="./assets-all-page/assets-home/img/dummyimg.png" alt="">
-							<div class="caption">
-								<h3>
-									<a href="#">Samsung Galaxy </a>
-								</h3>
-								<p>
-									Price : <strong>$ 3,45,900</strong>
-								</p>
-								<p>
-									<a href="#">Ptional dismiss button </a>
-								</p>
-								<p>Ptional dismiss button in tional dismiss button in</p>
-								<p>
-									<a href="#" class="btn btn-success" role="button">Add To
-										Cart</a> <a href="#" class="btn btn-primary" role="button">See
-										Details</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<!-- /.col -->
+						</c:forEach>
+					</c:if>
+					
+					
 				</div>
 				<!-- /.row -->
 				<div class="row">
@@ -459,127 +359,15 @@
 						<li><a href="#">1</a></li>
 						<li><a href="#">2</a></li>
 						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
 						<li><a href="#">»</a></li>
 					</ul>
 				</div>
 				<!-- /.row -->
-				<div>
-					<ol class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Clothing</a></li>
-						<li class="active">Men's Clothing</li>
-					</ol>
+				
+				
+				
+				
 				</div>
-				<!-- /.div -->
-				<div class="row">
-					<div class="btn-group alg-right-pad">
-						<button type="button" class="btn btn-default">
-							<strong>3005 </strong>items
-						</button>
-						<div class="btn-group">
-							<button type="button" class="btn btn-primary dropdown-toggle"
-								data-toggle="dropdown">
-								Sort Products &nbsp; <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li><a href="#">By Price Low</a></li>
-								<li class="divider"></li>
-								<li><a href="#">By Price High</a></li>
-								<li class="divider"></li>
-								<li><a href="#">By Popularity</a></li>
-								<li class="divider"></li>
-								<li><a href="#">By Reviews</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- /.row -->
-				<div class="row">
-					<div class="col-md-4 text-center col-sm-6 col-xs-6">
-						<div class="thumbnail product-box">
-							<img src="./assets-all-page/assets-home/img/dummyimg.png" alt="">
-							<div class="caption">
-								<h3>
-									<a href="#">Samsung Galaxy </a>
-								</h3>
-								<p>
-									Price : <strong>$ 3,45,900</strong>
-								</p>
-								<p>
-									<a href="#">Ptional dismiss button </a>
-								</p>
-								<p>Ptional dismiss button in tional dismiss button in</p>
-								<p>
-									<a href="#" class="btn btn-success" role="button">Add To
-										Cart</a> <a href="#" class="btn btn-primary" role="button">See
-										Details</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<!-- /.col -->
-					<div class="col-md-4 text-center col-sm-6 col-xs-6">
-						<div class="thumbnail product-box">
-							<img src="./assets-all-page/assets-home/img/dummyimg.png" alt="">
-							<div class="caption">
-								<h3>
-									<a href="#">Samsung Galaxy </a>
-								</h3>
-								<p>
-									Price : <strong>$ 3,45,900</strong>
-								</p>
-								<p>
-									<a href="#">Ptional dismiss button </a>
-								</p>
-								<p>Ptional dismiss button in tional dismiss button in</p>
-								<p>
-									<a href="#" class="btn btn-success" role="button">Add To
-										Cart</a> <a href="#" class="btn btn-primary" role="button">See
-										Details</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<!-- /.col -->
-					<div class="col-md-4 text-center col-sm-6 col-xs-6">
-						<div class="thumbnail product-box">
-							<img src="./assets-all-page/assets-home/img/dummyimg.png" alt="">
-							<div class="caption">
-								<h3>
-									<a href="#">Samsung Galaxy </a>
-								</h3>
-								<p>
-									Price : <strong>$ 3,45,900</strong>
-								</p>
-								<p>
-									<a href="#">Ptional dismiss button </a>
-								</p>
-								<p>Ptional dismiss button in tional dismiss button in</p>
-								<p>
-									<a href="#" class="btn btn-success" role="button">Add To
-										Cart</a> <a href="#" class="btn btn-primary" role="button">See
-										Details</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<!-- /.col -->
-				</div>
-				<!-- /.row -->
-				<div class="row">
-					<ul class="pagination alg-right-pad">
-						<li><a href="#">«</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">»</a></li>
-					</ul>
-				</div>
-				<!-- /.row -->
 			</div>
 			<!-- /.col -->
 		</div>

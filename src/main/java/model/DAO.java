@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.spi.DirStateFactory.Result;
 
@@ -100,8 +102,8 @@ public class DAO {
 		String fullname = null;
 		Statement stmt = connectSqlServer();
 		if (stmt != null) {
-			String checkaccount = "select a.username, a.password , u.fullname\r\n" + "from account a\r\n"
-					+ "inner join users u on a.username =  u.username\r\n" + "where a.username = '" + username
+			String checkaccount = "select a.username, a.password , u.fullname\r\n" + "from account a "
+					+ "inner join users u on a.username =  u.username " + "where a.username = '" + username
 					+ "'\r\n";
 			String fetchPass = "";
 			try {
@@ -109,7 +111,7 @@ public class DAO {
 				while (fetchAccount.next()) {
 					fetchPass = fetchAccount.getString("password").trim();
 
-					if (BCrypt.checkpw(password, fetchPass)) {
+					if (BCrypt.checkpw(password.trim(), fetchPass)) {
 						fullname = fetchAccount.getString("fullname");
 					}
 				}
@@ -264,5 +266,73 @@ public class DAO {
 			}
 		}
 		return idmax;
+	}
+	
+	public static List<product> loadProductInMain() {
+
+		Statement stmt = connectSqlServer();
+		String loadProduct ="SELECT top(27) * from product "
+				+ "ORDER BY newid()";
+		if (stmt != null) {
+			
+			List<product> listProduct = new ArrayList<product>();
+			
+			try {
+				ResultSet result = stmt.executeQuery(loadProduct);
+				while(result.next()) {
+					int id = result.getInt("ID_product");
+					String name = result.getNString("name");
+					int price = result.getInt("price");
+					String describe = result.getString("describe");
+					String nameimgorvideo = result.getString("nameImgOrVideo");
+					int id_seller = result.getInt("ID_seller");
+					
+					product product = new product(id,name, price, describe, id_seller, nameimgorvideo);
+					
+					listProduct.add(product);
+					
+				}
+				if(listProduct.size() > 0) {
+					return listProduct;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public static List<product> loadProductsBySeller(int idseller) {
+
+		Statement stmt = connectSqlServer();
+		String loadProduct ="select * from product\r\n"
+				+ "where ID_seller = " + idseller;
+		if (stmt != null) {
+			
+			List<product> listProduct = new ArrayList<product>();
+			
+			try {
+				ResultSet result = stmt.executeQuery(loadProduct);
+				while(result.next()) {
+					int id = result.getInt("ID_product");
+					String name = result.getNString("name");
+					int price = result.getInt("price");
+					String describe = result.getString("describe");
+					String nameimgorvideo = result.getString("nameImgOrVideo");
+					int id_seller = result.getInt("ID_seller");
+					
+					product product = new product(id,name, price, describe, id_seller, nameimgorvideo);
+					
+					listProduct.add(product);
+					
+				}
+				if(listProduct.size() > 0) {
+					return listProduct;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 }

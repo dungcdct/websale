@@ -69,10 +69,18 @@ public class serverLogin extends HttpServlet {
 //			if view page is seller
 				
 				seller seller = DAO.fetchAllInforSeller(username);
+				
+//				take id of seller
+				int idseller = DAO.takeIdByUsername(username);
+				
+				System.out.println("id of seller logging is : " + idseller);
+				
 				if(seller != null && seller.getCategory().equals("seller")) {
 					HttpSession sesion = request.getSession(true);
+					session.setAttribute("idseller", idseller);
 					sesion.setAttribute("nameavatar", seller.getNameAvatar());
 					sesion.setAttribute("loadInforUser", seller);
+					session.setAttribute("category", seller.getCategory());
 					System.out.println("log succes , account with user name is :" + username);
 					System.out.println("log succes , account with full name is :" + fullname);
 					response.sendRedirect("homeSeller.jsp");
