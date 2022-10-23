@@ -323,38 +323,36 @@ boolean checkcategory = false;
 				
 				<!-- check fetch data in db is succes -->
 				<c:if test="<%=result%>">
+						<div style="width:100%; display:flex; justify-content: space-around; flex-wrap: wrap;">
 						<c:forEach var="product" items="<%=listproduct%>">
-							<div class="row">
-							<div class="col-md-4 text-center col-sm-6 col-xs-6">
-								<div class="thumbnail product-box">
+							<div style="width: 33%;" class="col-md-4 text-center col-sm-6 col-xs-6">
+								<div sty class="thumbnail product-box">
 									<img src="./upload/product/${product.getNameimgOrVideo()}" alt="">
 									<div class="caption">
 										<h3>
-											<a href="#">${product.getNameproduct()}</a>
+											<a href="#">${product.getNameproduct().substring(0, 30)}</a>
 										</h3>
 										<p>
 											Price : <strong>$ 3,45,900</strong>
 										</p>
-										<p>
-											<a href="#">Ptional dismiss button </a>
-										</p>
-										<p>Ptional dismiss button in tional dismiss button in</p>
+										
 										<p>
 											<a href="#" class="btn btn-success" role="button">Add To
-												Cart</a> <a href="#" class="btn btn-primary" role="button">See
+												Cart</a> <a href="/websport/detailProductUser?id=${product.getIdproduct()}" class="btn btn-primary" role="button">See
 												Details</a>
 										</p>
 									</div>
 								</div>
 							</div>
 						</c:forEach>
+							</div>
 					</c:if>
 					
 					
 				</div>
 				<!-- /.row -->
-				<div class="row">
-					<ul class="pagination alg-right-pad">
+				<div  class="row">
+					<ul class="p	agination alg-right-pad">
 						<li><a href="#">«</a></li>
 						<li><a href="#">1</a></li>
 						<li><a href="#">2</a></li>
@@ -363,7 +361,6 @@ boolean checkcategory = false;
 					</ul>
 				</div>
 				<!-- /.row -->
-				
 				
 				
 				

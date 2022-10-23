@@ -9,9 +9,9 @@
 <body>
 	<form action="addproduct" method="post" enctype="multipart/form-data">
 
-			<input style="padding: 5px;margin-top:20px;" type="text" placeholder="name" name="name" required=""><br>
+			<input style="padding: 15px;margin-top:20px;width:50%; " type="text" placeholder="name" name="name" required=""><br>
 			 
-			<input style="padding: 5px;margin-top:20px;" type="text" placeholder="price" name="price"
+			<input style="padding: 15px;margin-top:20px;width:50%; " type="text" placeholder="price" name="price"
 			required=""><br>
 			
 			<p><label for="w3review">Mô Tả Sản Phẩm</label></p>

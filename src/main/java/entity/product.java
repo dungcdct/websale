@@ -58,6 +58,7 @@ public class product {
 
 	public String getNameimgOrVideo() {
 		return nameimgOrVideo;
+		
 	}
 
 	public void setNameimgOrVideo(String nameimgOrVideo) {
